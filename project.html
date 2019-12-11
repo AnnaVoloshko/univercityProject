@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title></title>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+      <script src="table_add_col_row.js"></script>
+      <script src="del_col_row.js"></script>
+      <script src="pop-up.js"></script>
+      <script src="search.js"></script>
+      <script src="export.js"></script>      
+      <link rel="stylesheet" href="style_project.css">
+   </head>
+   <body>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js"></script>
+      <header>
+         <div class="header-content">
+            <div class="logo">Операции над таблицей</div>
+            <ul class="menu-content">
+               <li class="menu">
+                  <span>≡</span>
+                  <ul class="submenu">
+                     <li><a href="javascript:PopUpShow3()">Экспорт данных</a></li>
+                     <li><a href="javascript:">Импорт данных</a></li>
+                  </ul>
+               </li>
+            </ul>
+            <a href="javascript:PopUpShowSearch()">
+               <div class="icon-search"></div>
+            </a>
+         </div>
+         
+         <div class="pop-up-position">
+            <div class="b-popup-search" id="popup-search">
+               <form action="" method="post" class="search-form">
+                  <input type="search" class="form-control pull-right" id="search" placeholder="Table search">
+               </form>
+               <div class="actions">
+                  <button class="close-popup" id="but-style"><a href="javascript:PopUpHideSearch()">close</a></button>
+               </div>
+            </div>
+         </div>
+         
+         <div class="pop-up-position">
+            <div class="b-popup-export" id="popup3">
+               <h3>Хотите ли вы экспортировать данные?</h3>
+               <div class="actions">
+                  <button class="button-export" onclick="fnExcelReport();"><a href="#" class="export">Да</a></button>
+                  <button class="close-popup"><a href="javascript:PopUpHide3()">Нет</a></button>
+               </div>
+            </div>
+         </div>
+      </header>
+
+      <div class="table-container">
+         <div class="all-table-buttons">
+            <table class="table" id="tableID">
+               <thead>
+                  <tr>
+                     <th data-type="string">Number</th>
+                     <th data-type="number">Title 1</th>
+                     <th data-type="number">Title 2</th>
+                     <th data-type="number">Title 3</th>
+                     <th data-type="number">Title 4</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <form>
+                     <tr>
+                        <td>1</td>
+                        <td>34</td>
+                        <td>66</td>
+                        <td>89</td>
+                        <td>90</td>
+                     </tr>
+                  </form>
+                  <form>
+                     <tr>
+                        <td>2</td>
+                        <td>33</td>
+                        <td>11</td>
+                        <td>27</td>
+                        <td>98</td>
+                     </tr>
+                  </form>
+                  <form>
+                     <tr>
+                        <td>3</td>
+                        <td>65</td>
+                        <td>32</td>
+                        <td>22</td>
+                        <td>99</td>
+                     </tr>
+                  </form>
+                  <form>
+                     <tr>
+                        <td>4</td>
+                        <td>87</td>
+                        <td>55</td>
+                        <td>33</td>
+                        <td>111</td>
+                     </tr>
+                  </form>
+                  <form>
+                     <tr>
+                        <td>5</td>
+                        <td>87</td>
+                        <td>60</td>
+                        <td>40</td>
+                        <td>54</td>
+                     </tr>
+                  </form>
+               </tbody>
+            </table>
+            <div class="but-position">
+               <button id="add-row" class="button-tab add-row">+ row</button>
+               <button id="add-column" type="button" class="button-tab add-col">+ colomn</button>
+               <input class="input-remove" id="remrow" type="button" value="- row">
+               <input class="input-remove" id="remcol" type="button" value="- colomn">
+            </div>
+         </div>
+         <div class="cover">
+            <div class="table-buttons">
+               <h1 class="diagram-title">Заменить пропущенное значение</h1>
+               <div class="buttons-cover-blok">
+                  <button id="moda-bt" class="table-bt moda">Мода</button>
+                  <button id="mediana-bt" class="table-bt mediana">Медиана</button>
+                  <button id="srednee-bt" class="table-bt srednee">Среднее значение</button>
+               </div>
+            </div>
+            <div class="table-buttons">
+               <h1 class="diagram-title">Найти</h1>
+               <div class="buttons-cover-blok">
+                  <button id="metrika-bt" class="table-bt metrika">Евклидова метрика</button>
+                  <button id="corelation-bt" class="table-bt corelation">Кореляция</button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="diagram-container">
+         <div class="diagram" id="diagram">
+            <div class="diagram-radio">
+               <h4 class="diagram-title">Диаграммы</h4>
+               <label>
+                  <input class="chart-radio" type="radio" name="chart-radio" value="Bar">
+                  Bar
+               </label>
+               <label>
+                  <input class="chart-radio" type="radio" name="chart-radio" value="Line">
+                  Line
+               </label>
+               <label>
+                  <input class="chart-radio" type="radio" name="chart-radio" value="Doughnut">
+                  Doughnut
+               </label>
+               <label>
+                  <input class="chart-radio" type="radio" name="chart-radio" value="Polar">
+                  Polar Area
+               </label>
+               <label>
+                  <input class="chart-radio" type="radio" name="chart-radio" value="Radar">
+                  Radar
+               </label>
+               <label>
+                  <input class="chart-radio" type="radio" name="chart-radio" value="none">
+                  None
+               </label>
+            </div>
+            <canvas id="chartDoughnut"></canvas>
+            <canvas id="chartBar"></canvas>
+            <canvas id="chartLine"></canvas>
+            <canvas id="chartPolar"></canvas>
+            <canvas id="chartRadar"></canvas>
+            
+         </div>
+         
+         <script src="table_change_data.js"></script>
+         <script src="filter.js"></script>
+        <script src="chart-bar.js"></script>
+        <script src="chart-line.js"></script>
+        <script src="chart-doughnut.js"></script>
+        <script src="chart-polarArea.js"></script>
+        <script src="chart-radar.js"></script>
+        <script src="chart-radio.js"></script>
+      </div>
+      <footer></footer>
+   </body>
+</html>
